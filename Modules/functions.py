@@ -2,6 +2,7 @@
 #_*_ codig: utf8 _*_
 import datetime, json, boto3, smtplib, datetime, sys, traceback
 from email.message import EmailMessage
+from boto3.s3.transfer import S3Transfer, TransferConfig
 from Modules.constants import *
 
 def SendMail(text, mail_subject):
@@ -26,8 +27,7 @@ def Download_Logs(DATE_LOG):
         if 'Contents' in logs:    
             for i in range(len(logs['Contents'])):
                 log_Key=logs['Contents'][i]['Key']
-                with open(f'{Downloads_Path}/{log_Key}', 'wb') as data:
-                    s3_client.download_fileobj(Bucket_logs, log_Key, data)
+                S3Transfer(s3_client, TransferConfig(max_bandwidth=5000000)).download_file(Bucket_logs,log_Key,f'{Downloads_Path}/{log_Key}')
                 objects['Objects'].append({'Key': log_Key,})
                 list_objects.append(f"{Downloads_Path}/{log_Key}")
                 s3_client.copy_object(
