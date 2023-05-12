@@ -15,7 +15,7 @@ profile={   #Use (main)
 Bucket_logs='dbeventlogs' #Use (functions:Dowload_Logs)
 Bucket_logs_old='dbeventlogsold' #Use (functions:Dowload_Logs)
 aws_profile='pythonapps' #Use (functions:Dowload_Logs, extract_xml_data)
-Mail_To=['ingenieriavcmc@vcmedios.com.co', 'Gtecnicovcmc@vcmedios.com.co'] #Use (functions:SendMail)
+Mail_To=['ingenieriavcmc@vcmedios.com.co'] #Use (functions:SendMail)
 
 dict_summary={}
 count_newmanifest=0

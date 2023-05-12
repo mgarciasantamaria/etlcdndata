@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #_*_ codig: utf8 _*_
-import datetime, json, boto3, smtplib, datetime
+import datetime, json, boto3, smtplib, datetime, sys, traceback
 from email.message import EmailMessage
 from Modules.constants import *
 
@@ -17,33 +17,41 @@ def SendMail(text, mail_subject):
     return
 
 def Download_Logs(DATE_LOG):
-    objects={'Objects':[]}
-    list_objects=[]
-    aws_session=boto3.Session(profile_name=aws_profile)
-    s3_client=aws_session.client('s3')
-    logs=s3_client.list_objects_v2(Bucket=Bucket_logs)
-    if 'Contents' in logs:    
-        for i in range(len(logs['Contents'])):
-            log_Key=logs['Contents'][i]['Key']
-            with open(f'{Downloads_Path}/{log_Key}', 'wb') as data:
-                s3_client.download_fileobj(Bucket_logs, log_Key, data)
-            objects['Objects'].append({'Key': log_Key,})
-            list_objects.append(f"{Downloads_Path}/{log_Key}")
-            s3_client.copy_object(
-                Bucket=Bucket_logs_old,
-                CopySource=f'{Bucket_logs}/{log_Key}',
-                Key=f'{log_Key}'
+    try:
+        objects={'Objects':[]}
+        list_objects=[]
+        aws_session=boto3.Session(profile_name=aws_profile)
+        s3_client=aws_session.client('s3')
+        logs=s3_client.list_objects_v2(Bucket=Bucket_logs)
+        if 'Contents' in logs:    
+            for i in range(len(logs['Contents'])):
+                log_Key=logs['Contents'][i]['Key']
+                with open(f'{Downloads_Path}/{log_Key}', 'wb') as data:
+                    s3_client.download_fileobj(Bucket_logs, log_Key, data)
+                objects['Objects'].append({'Key': log_Key,})
+                list_objects.append(f"{Downloads_Path}/{log_Key}")
+                s3_client.copy_object(
+                    Bucket=Bucket_logs_old,
+                    CopySource=f'{Bucket_logs}/{log_Key}',
+                    Key=f'{log_Key}'
+                    )
+                
+            s3_client.delete_objects(
+                    Bucket=Bucket_logs,
+                    Delete=objects
                 )
-            
-        s3_client.delete_objects(
-                Bucket=Bucket_logs,
-                Delete=objects
-            )
-        return list_objects
-    else:
-        text_print=f"Logs not found"
-        print_log("a",text_print,DATE_LOG)
-        return []
+            return list_objects
+        else:
+            text_print=f"Logs not found"
+            print_log("a",text_print,DATE_LOG)
+            return []
+    except:
+        error=sys.exc_info()[2] #Captura del error generado por el sistema.
+        errorinfo=traceback.format_tb(error)[0] #Cartura del detalle del error.
+        return {
+            'Error': str(sys.exc_info()[1]),
+            'error_info': errorinfo
+        }
 
 def print_log(OPTION, TEXT, DATE_LOG):
     log_file=open(f"{log_Path}/{DATE_LOG}_log.txt", OPTION)
