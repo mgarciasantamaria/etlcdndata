@@ -111,7 +111,7 @@ if __name__ == '__main__':
                         dict_summary_srt=json.dumps(dict_summary, sort_keys=False, indent=8)
                         print(dict_summary_srt)
                         print_log("a", dict_summary_srt, date_log)
-                        os.remove(f"{Downloads_Path}/{file_path}")
+                        os.remove(f"{file_path}")
                         dict_summary={}
                         count_newmanifest=0
                         count_VmxSegments=0
