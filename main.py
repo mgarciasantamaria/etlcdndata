@@ -16,7 +16,7 @@ if __name__ == '__main__':
                 dict_summary['Log_Error']=logs_List
                 dict_summary_srt=json.dumps(dict_summary, sort_keys=True, indent=4)
                 print(dict_summary_srt)
-                print_log(dict_summary_srt, date_log) #Se registra en el log de eventos el resumen.
+                print_log('a', dict_summary_srt, date_log) #Se registra en el log de eventos el resumen.
                 mail_subject='etltoolbox PROD Error Download Logs' #Se establece el asunto del correo.
                 SendMail(dict_summary_srt, mail_subject) #Se envia correo electronico.
             elif type(logs_List) == list:
