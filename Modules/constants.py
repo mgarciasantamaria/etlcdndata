@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #_*_ codig: utf8 _*_
-json_path="../../json/vars.json"
+json_path="../json/vars.json"
 log_Path="./Logs" # Test
 Downloads_Path="./S3Download"
 
@@ -22,5 +22,3 @@ count_newmanifest=0
 count_VmxSegments=0
 count_newsegments=0
 quantity=0
-
-    
