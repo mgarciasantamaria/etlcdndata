@@ -17,7 +17,7 @@ if __name__ == '__main__':
                 dict_summary_srt=json.dumps(dict_summary, sort_keys=True, indent=4)
                 print(dict_summary_srt)
                 print_log('a', dict_summary_srt, date_log) #Se registra en el log de eventos el resumen.
-                mail_subject='etltoolbox PROD Error Download Logs' #Se establece el asunto del correo.
+                mail_subject='WARNING etltoolbox_PROD error Download Logs' #Se establece el asunto del correo.
                 SendMail(dict_summary_srt, mail_subject) #Se envia correo electronico.
             elif type(logs_List) == list:
                 print(f"Log list: {logs_List}")
@@ -100,7 +100,6 @@ if __name__ == '__main__':
                                             Type=Uri[3].split('.')[1]
                                             if Type=='vmxmpd' or Type=='vmxm3u8':
                                                 count_VmxSegments+=1
-                        #text_print=f"Log {file_path}.\n\t\t\t{quantity} lines proceseed.\n\t\t\t{count_newmanifest} manifest finded and registered in Manifest table.\n\t\t\t{count_VmxSegments} Verimatrix Segments.\n\t\t\t{count_newsegments} Segments finded and registered in newSegmentos table."
                         finish=time.time()
                         dict_summary['Log_summary']=file_path.split('/')[-1]
                         dict_summary['Lines_processed']=str(quantity)
@@ -138,10 +137,10 @@ if __name__ == '__main__':
             }
             dict_summary_srt=json.dumps(dict_summary, sort_keys=False, indent=8)
             print_log("a", dict_summary_srt, date_log)
-            mail_subject='etltoolbox PROD Execution Error'
+            mail_subject='FAIL etltoolbox_PROD Execution Error'
             SendMail(dict_summary_srt, mail_subject)
     else:
-        text_print="etlcdnata application failure not recognized\n"
+        text_print="etltoolbox_PROD application failure not recognized\n"
         print_log("a", text_print, date_log)
         quit()
     
