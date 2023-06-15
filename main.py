@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #_*_ codig: utf8 _*_
-import sys, traceback, gzip, time, datetime, json, psycopg2, os
+import sys, traceback, gzip, time, datetime, json, psycopg2, os, shutil
 from Modules.functions import *
 from Modules.constants import *
 
@@ -110,7 +110,8 @@ if __name__ == '__main__':
                         dict_summary_srt=json.dumps(dict_summary, sort_keys=False, indent=8)
                         print(dict_summary_srt)
                         print_log("a", dict_summary_srt, date_log)
-                        os.remove(f"{file_path}")
+                        file_Name=os.path.basename(file_path)
+                        shutil.move(file_path, destination_Path+file_Name)
                         dict_summary={}
                         count_newmanifest=0
                         count_VmxSegments=0
