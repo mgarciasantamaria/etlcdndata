@@ -3,6 +3,7 @@
 json_path="../json/vars.json"
 log_Path="./Logs" # Test
 Downloads_Path="./S3Download"
+destination_Path=src_Path="/mnt/ingbox/LogsCDN/"
 
 data_base_connect="host=10.10.130.38 dbname=cdndb user=vodtransfers3 password=vod-2022" #use (main) (functions:extract_xml_data, Duration_Transform)
 profile={   #Use (main)
