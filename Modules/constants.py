@@ -5,7 +5,7 @@ log_Path="./Logs" # Test
 Downloads_Path="./S3Download"
 destination_Path="/mnt/ingbox/LogsCDN/"
 
-data_base_connect="host=10.10.130.38 dbname=cdndb user=vodtransfers3 password=vod-2022" #use (main) (functions:extract_xml_data, Duration_Transform)
+data_base_connect="host=10.10.130.152 dbname=toolboxprod user=vodaplications password=V0D-20234pl1c4t10ns" #use (main) (functions:extract_xml_data, Duration_Transform)
 profile={   #Use (main)
     'mpd': [4, 'Dash', 'm4s'],
     'vmxmpd': [4, 'Dash', 'm4s'],
